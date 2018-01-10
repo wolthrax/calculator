@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 public class Numbers {
 	
 	public static final BigDecimal defaultNumber = new BigDecimal(Double.MAX_VALUE);
-	//public static final String DefaultCurrentValue = "0";
 	
 	public static BigDecimal firstNumber = defaultNumber;
 	public static BigDecimal secondNumber = defaultNumber;

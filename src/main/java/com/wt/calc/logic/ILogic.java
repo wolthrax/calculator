@@ -4,18 +4,18 @@ import javafx.scene.control.Label;
 
 public interface ILogic {
 	
-	public void command();
+	void command();
 	
-	public void sum();
-	public void diff();
-	public void mul();
-	public void div();
-	public void pow();
-	public void percent();
-	public void c();
+	void sum();
+	void diff();
+	void mul();
+	void div();
+	void pow();
+	void percent();
+	void c();
 	
 	
-	public void showText(Label textCurrent, Label textFull);
-	public void showText(Label textCurrent, Label textFull, String firstNumber);
+	void showText(Label textCurrent, Label textFull);
+	void showText(Label textCurrent, Label textFull, String firstNumber);
 	
 }
