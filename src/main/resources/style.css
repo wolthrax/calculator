@@ -1,0 +1,23 @@
+.button {
+	-fx-background-color: #EEEEEE;
+    -fx-border-width: 0;
+    -fx-background-radius: 5;
+}
+
+.button:hover{
+	-fx-background-color: #EDEDED;
+	-fx-border-width: 0;
+	-fx-effect: innershadow(three-pass-box, rgba(0,0,0,.17), 20, 0, 0, 0);
+	-fx-background-radius: 5;
+}
+
+.button:pressed{
+  	-fx-background-color: #EDEDED;
+  	-fx-border-width: 0;
+	-fx-effect: innershadow(three-pass-box, rgba(0,0,0,.37), 20, 0, 0, 0);
+	-fx-background-radius: 5;
+}
+
+.textArea{
+	-fx-border-width: 0;
+}
