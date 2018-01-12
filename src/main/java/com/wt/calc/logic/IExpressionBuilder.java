@@ -4,7 +4,7 @@ public interface IExpressionBuilder {
 
 	void buildExpression(char operation);
 	
-	void addInString(String symbol);
+	void addToString(String symbol);
 	void delFromString();
 	void addOperationInFullString();
 	void addNegative();

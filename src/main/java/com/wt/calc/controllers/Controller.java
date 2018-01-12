@@ -1,10 +1,6 @@
 package com.wt.calc.controllers;
 
-import com.wt.calc.logic.ExpressionBuilderImpl;
-import com.wt.calc.logic.IExpressionBuilder;
-import com.wt.calc.logic.ILogic;
-import com.wt.calc.logic.LogicImpl;
-import com.wt.calc.logic.Numbers;
+import com.wt.calc.logic.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +13,7 @@ public class Controller {
 	
 	private ILogic logic = new LogicImpl();
 	private IExpressionBuilder exBuilder = new ExpressionBuilderImpl();
+	private Numbers numbers = Numbers.getInstance();
 	
 	
 	@FXML 
@@ -29,57 +26,57 @@ public class Controller {
 	TextArea textHistory;
 	
 	public void bOne(ActionEvent event) {
-		exBuilder.addInString("1");
+		exBuilder.addToString("1");
 		logic.showText(textCurrent, textFull);
 	}
 	
 	public void bTwo(ActionEvent event) {
-		exBuilder.addInString("2");
+		exBuilder.addToString("2");
 		logic.showText(textCurrent, textFull);
 	}
 	
 	public void bThree(ActionEvent event) {
-		exBuilder.addInString("3");
+		exBuilder.addToString("3");
 		logic.showText(textCurrent, textFull);
 	}
 	
 	public void bFour(ActionEvent event) {
-		exBuilder.addInString("4");
+		exBuilder.addToString("4");
 		logic.showText(textCurrent, textFull);
 	}
 	
 	public void bFive(ActionEvent event) {
-		exBuilder.addInString("5");
+		exBuilder.addToString("5");
 		logic.showText(textCurrent, textFull);
 	}
 	
 	public void bSix(ActionEvent event) {
-		exBuilder.addInString("6");
+		exBuilder.addToString("6");
 		logic.showText(textCurrent, textFull);
 	}
 	
 	public void bSeven(ActionEvent event) {
-		exBuilder.addInString("7");
+		exBuilder.addToString("7");
 		logic.showText(textCurrent, textFull);
 	}
 	
 	public void bEight(ActionEvent event) {
-		exBuilder.addInString("8");
+		exBuilder.addToString("8");
 		logic.showText(textCurrent, textFull);
 	}
 	
 	public void bNine(ActionEvent event) {
-		exBuilder.addInString("9");
+		exBuilder.addToString("9");
 		logic.showText(textCurrent, textFull);
 	}
 	
 	public void bZero(ActionEvent event) {
-		exBuilder.addInString("0");
+		exBuilder.addToString("0");
 		logic.showText(textCurrent, textFull);
 	}
 	
 	public void bPoint(ActionEvent event) {
-		exBuilder.addInString(".");
+		exBuilder.addToString(".");
 		logic.showText(textCurrent, textFull);
 	}
 	
@@ -96,44 +93,43 @@ public class Controller {
 	public void bSum(ActionEvent event) {
 		exBuilder.buildExpression('+');
 		exBuilder.addOperationInFullString();
-		logic.showText(textCurrent, textFull, Numbers.firstNumber.toString());
+		logic.showText(textCurrent, textFull, numbers.getFirstNumber().toString());
 	}
 
 	public void bDiff(ActionEvent event) {
 		exBuilder.buildExpression('-');
 		exBuilder.addOperationInFullString();
-		logic.showText(textCurrent, textFull, Numbers.firstNumber.toString());
+		logic.showText(textCurrent, textFull, numbers.getFirstNumber().toString());
 	}
 
 	public void bMul(ActionEvent event) {
 		exBuilder.buildExpression('*');
 		exBuilder.addOperationInFullString();
-		logic.showText(textCurrent, textFull, Numbers.firstNumber.toString());
+		logic.showText(textCurrent, textFull, numbers.getFirstNumber().toString());
 	}
 	
 	public void bDiv(ActionEvent event) {
 		exBuilder.buildExpression('/');
 		exBuilder.addOperationInFullString();
-		logic.showText(textCurrent, textFull, Numbers.firstNumber.toString());
+		logic.showText(textCurrent, textFull, numbers.getFirstNumber().toString());
 	}
 	
 	public void bPow(ActionEvent event) {
 		exBuilder.buildExpression('^');
 		exBuilder.addOperationInFullString();
-		logic.showText(textCurrent, textFull, Numbers.firstNumber.toString());
+		logic.showText(textCurrent, textFull, numbers.getFirstNumber().toString());
 	}
 
 	public void bPercent(ActionEvent event) {
 		logic.percent();
-		textCurrent.setText(Numbers.secondNumber.toString());
-		Numbers.currentValue = Numbers.secondNumber.toString();
+		textCurrent.setText(numbers.getSecondNumber().toString());
+		numbers.setCurrentValue(numbers.getSecondNumber().toString());
 	}
 
 	public void bEq(ActionEvent event) {
-		exBuilder.buildExpression(Numbers.operation);
-		textHistory.appendText(Numbers.fullString + " = " + 
-			Numbers.firstNumber + "\n");
-		logic.showText(textCurrent, textFull, Numbers.firstNumber.toString());
+		exBuilder.buildExpression(numbers.getOperation());
+		textHistory.appendText(numbers.getFullString() + " = " + numbers.getFirstNumber() + "\n");
+		logic.showText(textCurrent, textFull, numbers.getFirstNumber().toString());
 	}
 	
 	public void bClear(ActionEvent event) {

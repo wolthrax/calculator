@@ -6,41 +6,43 @@ import java.math.RoundingMode;
 import javafx.scene.control.Label;
 
 public class LogicImpl implements ILogic{
+
+	private Numbers numbers = Numbers.getInstance();
 	
 	@Override
 	public void command(){
-		switch (Numbers.operation) {
+		switch (numbers.getOperation()) {
 		case '+':
-			if(Numbers.currentValue.equals(""))
-				Numbers.secondNumber = new BigDecimal("0");
-			else Numbers.secondNumber = new BigDecimal(Numbers.currentValue);
+			if(numbers.getCurrentValue().equals(""))
+				numbers.setSecondNumber(new BigDecimal("0"));
+			else numbers.setSecondNumber(new BigDecimal(numbers.getCurrentValue()));
 			sum();
 			break;
 			
 		case '-':
-			if(Numbers.currentValue.equals(""))
-				Numbers.secondNumber = new BigDecimal("0");
-			else Numbers.secondNumber = new BigDecimal(Numbers.currentValue);
+			if(numbers.getCurrentValue().equals(""))
+				numbers.setSecondNumber(new BigDecimal("0"));
+			else numbers.setSecondNumber(new BigDecimal(numbers.getCurrentValue()));
 			diff();
 			break;
 			
 		case '*':
-			if(Numbers.currentValue.equals(""))
-				Numbers.secondNumber = new BigDecimal("1");
-			else Numbers.secondNumber = new BigDecimal(Numbers.currentValue);
+			if(numbers.getCurrentValue().equals(""))
+				numbers.setSecondNumber(new BigDecimal("1"));
+			else numbers.setSecondNumber(new BigDecimal(numbers.getCurrentValue()));
 			mul();
 			break;
 			
 		case '/':
-			if(Numbers.currentValue.equals(""))
-				Numbers.secondNumber = new BigDecimal("1");
-			else Numbers.secondNumber = new BigDecimal(Numbers.currentValue);
+			if(numbers.getCurrentValue().equals(""))
+				numbers.setSecondNumber(new BigDecimal("1"));
+			else numbers.setSecondNumber(new BigDecimal(numbers.getCurrentValue()));
 			div();
 			break;
 		case '^':
-			if(Numbers.currentValue.equals(""))
-				Numbers.secondNumber = new BigDecimal("1");
-			else Numbers.secondNumber = new BigDecimal(Numbers.currentValue);
+			if(numbers.getCurrentValue().equals(""))
+				numbers.setSecondNumber(new BigDecimal("1"));
+			else numbers.setSecondNumber(new BigDecimal(numbers.getCurrentValue()));
 			pow();
 			break;
 		}
@@ -48,66 +50,65 @@ public class LogicImpl implements ILogic{
 
 	@Override
 	public void sum() {
-		Numbers.firstNumber = Numbers.firstNumber.add(Numbers.secondNumber);
-		Numbers.secondNumber = Numbers.defaultNumber;
+		numbers.setFirstNumber(numbers.getFirstNumber().add(numbers.getSecondNumber()));
+		numbers.setSecondNumber(numbers.getDefaultNumber());
 	}
 
 	@Override
 	public void diff() {
-		Numbers.firstNumber = Numbers.firstNumber.subtract(Numbers.secondNumber);
-		Numbers.secondNumber = Numbers.defaultNumber;
+		numbers.setFirstNumber(numbers.getFirstNumber().subtract(numbers.getSecondNumber()));
+		numbers.setSecondNumber(numbers.getDefaultNumber());
 	}
 	
 	@Override
 	public void mul() {
-		Numbers.firstNumber = Numbers.firstNumber.multiply(Numbers.secondNumber);
-		Numbers.secondNumber = Numbers.defaultNumber;
+		numbers.setFirstNumber(numbers.getFirstNumber().multiply(numbers.getSecondNumber()));
+		numbers.setSecondNumber(numbers.getDefaultNumber());
 	}
 	
 	@Override
 	public void div() {
-		if(Numbers.secondNumber.compareTo(new BigDecimal("0")) == 0){
-			Numbers.currentValue = "";
-			Numbers.fullString = "";
-			Numbers.fullString = "Division by zero is impossible";
-			Numbers.firstNumber = BigDecimal.ZERO;
+		if(numbers.getSecondNumber().compareTo(new BigDecimal("0")) == 0){
+			numbers.setCurrentValue("");
+			numbers.setFullString("");
+			numbers.setFullString("Division by zero is impossible");
+			numbers.setFirstNumber(BigDecimal.ZERO);
 		} else{
-			Numbers.firstNumber = Numbers.firstNumber.
-					divide(Numbers.secondNumber, 32, RoundingMode.HALF_UP);
-			Numbers.secondNumber = Numbers.defaultNumber;
+			numbers.setFirstNumber(numbers.getFirstNumber().divide(numbers.getSecondNumber(), 9, RoundingMode.HALF_UP).stripTrailingZeros());
+			numbers.setSecondNumber(numbers.getDefaultNumber());
 		}
 	}
 	
 	@Override
 	public void pow() {
-		Numbers.firstNumber = Numbers.firstNumber.pow(Numbers.secondNumber.intValue());
-		Numbers.secondNumber = Numbers.defaultNumber;
+		numbers.setFirstNumber(numbers.getFirstNumber().pow(numbers.getSecondNumber().intValue()));
+		numbers.setSecondNumber(numbers.getDefaultNumber());
 	}
 	
 	@Override
 	public void percent() {
-		Numbers.secondNumber = Numbers.firstNumber.divide(new BigDecimal("100")).
-				multiply(new BigDecimal(Numbers.currentValue));
+		numbers.setSecondNumber(numbers.getFirstNumber().divide(new BigDecimal("100")).multiply(new BigDecimal(numbers.getCurrentValue())));
 	}
 
 	@Override
 	public void c() {
-		Numbers.currentValue = "";
-		Numbers.fullString = "";
-		Numbers.firstNumber = Numbers.defaultNumber;
-		Numbers.secondNumber = Numbers.defaultNumber;
+
+		numbers.setCurrentValue("");
+		numbers.setFullString("");
+		numbers.setFirstNumber(numbers.getDefaultNumber());
+		numbers.setSecondNumber(numbers.getDefaultNumber());
 	}
 	
 	@Override
 	public void showText(Label textCurrent, Label textFull) {
-		textCurrent.setText(Numbers.currentValue);
-		textFull.setText(Numbers.fullString);
+		textCurrent.setText(numbers.getCurrentValue());
+		textFull.setText(numbers.getFullString());
 	}
 
 	@Override
 	public void showText(Label textCurrent, Label textFull, String firstNumber) {
 		textCurrent.setText(firstNumber);
-		textFull.setText(Numbers.fullString);
+		textFull.setText(numbers.getFullString());
 	}
 
 }

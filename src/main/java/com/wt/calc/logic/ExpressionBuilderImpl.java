@@ -5,54 +5,55 @@ import java.math.BigDecimal;
 public class ExpressionBuilderImpl implements IExpressionBuilder{
 	
 	private ILogic logic = new LogicImpl();
+	private Numbers numbers = Numbers.getInstance();
 
 	public void buildExpression(char operation){
-		if(Numbers.firstNumber.compareTo(Numbers.defaultNumber) == 0){
-			if(Numbers.currentValue.equals("")){
-				Numbers.firstNumber = new BigDecimal("0");
-				Numbers.fullString += "0";
-			} else Numbers.firstNumber = new BigDecimal(Numbers.currentValue);
+		if(numbers.getFirstNumber().compareTo(numbers.getDefaultNumber()) == 0){
+			if(numbers.getCurrentValue().equals("")){
+				numbers.setFirstNumber(new BigDecimal("0"));
+				numbers.setFullString(numbers.getFullString()+"0");
+			} else numbers.setFirstNumber(new BigDecimal(numbers.getCurrentValue()));
 		} else {
-			if(Numbers.currentValue.equals(""))
-				Numbers.secondNumber = Numbers.defaultNumber;
-			else Numbers.secondNumber = new BigDecimal(Numbers.currentValue);
+			if(numbers.getCurrentValue().equals(""))
+				numbers.setSecondNumber(numbers.getDefaultNumber());
+			else numbers.setSecondNumber(new BigDecimal(numbers.getCurrentValue()));
 			logic.command();
 		}
-		Numbers.fullString += Numbers.currentValue;
-		Numbers.currentValue = "";
-		Numbers.operation = operation;
+
+		numbers.setFullString(numbers.getFullString()+numbers.getCurrentValue());
+		numbers.setCurrentValue("");
+		numbers.setOperation(operation);
 	}
 	
 	@Override
-	public void addInString(String symbol){
-		Numbers.currentValue += symbol;
+	public void addToString(String symbol){
+		numbers.setCurrentValue(numbers.getCurrentValue() + symbol);
 	}
 	
 	@Override
 	public void delFromString(){
-		if(!Numbers.currentValue.equals("")){
-			Numbers.currentValue = Numbers.currentValue.substring(0, Numbers.currentValue.length()-1);
-			if(Numbers.currentValue.equals(""))
-				Numbers.currentValue = "0";
+		if(!numbers.getCurrentValue().equals("")){
+			numbers.setCurrentValue(numbers.getCurrentValue().substring(0, numbers.getCurrentValue().length()-1));
+			if(numbers.getCurrentValue().equals(""))
+				numbers.setCurrentValue("0");
 		}
 	}
 
 	@Override
 	public void addOperationInFullString() {
-		Numbers.fullString += " " + Numbers.operation + " ";
+		numbers.setFullString(numbers.getFullString() + " " + numbers.getOperation() + " ");
 	}
 	
 	@Override 
 	public void addNegative(){
-		if(Numbers.currentValue.equals("")){
-			Numbers.currentValue += "-";
+		if(numbers.getCurrentValue().equals("")){
+			numbers.setCurrentValue(numbers.getCurrentValue() + "-");
 		}
-		else if(Numbers.currentValue.charAt(0) == '-'){
-			Numbers.currentValue = Numbers.currentValue
-					.substring(1, Numbers.currentValue.length());
+		else if(numbers.getCurrentValue().charAt(0) == '-'){
+			numbers.setCurrentValue(numbers.getCurrentValue().substring(1, numbers.getCurrentValue().length()));
+
 		} else {
-			Numbers.currentValue = "-" + Numbers.currentValue
-					.substring(0, Numbers.currentValue.length());			
+			numbers.setCurrentValue("-" + numbers.getCurrentValue().substring(0, numbers.getCurrentValue().length()));
 		}
 	}
 }
